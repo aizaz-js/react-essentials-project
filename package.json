@@ -1,6 +1,7 @@
 {
 	"name": "react-essentials-start",
 	"version": "0.0.0",
+	"homepage": "https://aizaz-js.github.io/react-essentials-project",
 	"scripts": {
 		"dev": "vite --port 3000",
 		"build": "vite build",
@@ -17,7 +18,6 @@
 		"gh-pages": "^6.2.0",
 		"vite": "^4.3.9"
 	},
-	"homepage": "https://aizaz-js.github.io/React-Essentials-Project",
 	"keywords": [],
 	"description": ""
 }
