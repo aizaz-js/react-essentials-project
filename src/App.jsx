@@ -1,15 +1,15 @@
-import { Header, CoreConcepts, Examples } from "@components";
+import { Header, CoreConcepts, Examples } from '@components';
 
 function App() {
-	return (
-		<>
-			<Header />
-			<main>
-				<CoreConcepts />
-				<Examples />
-			</main>
-		</>
-	);
+  return (
+    <>
+      <Header />
+      <main>
+        <CoreConcepts />
+        <Examples />
+      </main>
+    </>
+  );
 }
 
 export default App;
