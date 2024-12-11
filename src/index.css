@@ -148,3 +148,32 @@ main h2 {
 #tab-content code {
   font-size: 1rem;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+table thead th {
+  border: 2px solid white;
+  background-color: transparent;
+  padding: 10px;
+}
+
+table tbody td {
+  border: 1px solid white;
+  padding: 10px;
+}
+.button_wrapper {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+
+td input {
+  width: 100%;
+}

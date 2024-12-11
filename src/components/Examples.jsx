@@ -6,6 +6,7 @@ import { Tabs } from './Tabs';
 
 export function Examples() {
   const [selectedTopic, setSelectedTopic] = useState('components');
+  // const selectedTopic = 'jsx';
 
   function handleSelect(selectedButton) {
     setSelectedTopic(selectedButton);
