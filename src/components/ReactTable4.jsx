@@ -29,6 +29,10 @@ export function ReactTable4() {
     setEditId(null);
   }
 
+  function handleDeleteClick(id) {
+    setEditMode(prevData => prevData.filter(row => row.id !== id));
+  }
+
   return (
     <table>
       <thead>
@@ -62,7 +66,7 @@ export function ReactTable4() {
                 <button onClick={() => handleEditClick(item.id, item.name, item.description)}>Edit</button>
               )}
 
-              <button>Delete</button>
+              <button onClick={() => handleDeleteClick(item.id)}>Delete</button>
             </td>
           </tr>
         ))}
