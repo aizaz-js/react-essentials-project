@@ -5,3 +5,7 @@ export { CoreConcepts } from './CoreConcepts';
 export { Examples } from './Examples';
 export { Section } from './Section';
 export { Tabs } from './Tabs';
+export { ReactTable } from './ReactTable';
+export { ReactTable2 } from './Reacttable2';
+export { ReactTable3 } from './ReactTable3';
+export { ReactTable4 } from './ReactTable4';
