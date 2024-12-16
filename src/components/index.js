@@ -9,3 +9,6 @@ export { ReactTable } from './ReactTable';
 export { ReactTable2 } from './Reacttable2';
 export { ReactTable3 } from './ReactTable3';
 export { ReactTable4 } from './ReactTable4';
+export { ToDoList } from './ToDoList';
+export { ImageCarousel } from './ImageCarousel';
+export { ToDoList2 } from './ToDoList2';

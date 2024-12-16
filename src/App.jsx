@@ -1,5 +1,14 @@
-import { Header, CoreConcepts, Examples, ReactTable, ReactTable2, ReactTable3, ReactTable4 } from '@components';
-
+import {
+  Header,
+  CoreConcepts,
+  Examples,
+  ReactTable,
+  ReactTable2,
+  ReactTable3,
+  ReactTable4,
+  ImageCarousel,
+  ToDoList2,
+} from '@components';
 function App() {
   return (
     <>
@@ -11,6 +20,7 @@ function App() {
         <ReactTable2 />
         <ReactTable3 />
         <ReactTable4 />
+        <ImageCarousel />
       </main>
     </>
   );
