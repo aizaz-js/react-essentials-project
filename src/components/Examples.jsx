@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { Children, useState } from 'react';
 import { EXAMPLES } from '../data';
 import { TabButton } from './TabButton';
 import { Section } from './Section';
 import { Tabs } from './Tabs';
+import { ToDoList } from './ToDoList';
 
 export function Examples() {
   const [selectedTopic, setSelectedTopic] = useState('components');
@@ -30,6 +31,9 @@ export function Examples() {
             <TabButton isSelected={selectedTopic === 'state'} onClick={() => handleSelect('state')}>
               State
             </TabButton>
+            <TabButton isSelected={selectedTopic === 'todolist'} onClick={() => handleSelect('todolist')}>
+              To Do List
+            </TabButton>
           </>
         }
       >
@@ -39,6 +43,7 @@ export function Examples() {
           <pre>
             <code>{EXAMPLES[selectedTopic].code}</code>
           </pre>
+          {selectedTopic === 'todolist' ? <ToDoList /> : ''}
         </div>
       </Tabs>
     </Section>
