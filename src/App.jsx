@@ -1,29 +1,8 @@
-import {
-  Header,
-  CoreConcepts,
-  Examples,
-  ReactTable,
-  ReactTable2,
-  ReactTable3,
-  ReactTable4,
-  ImageCarousel,
-  ToDoList2,
-} from '@components';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './routes/createBrowserRouter';
+
 function App() {
-  return (
-    <>
-      <Header />
-      <main>
-        <CoreConcepts />
-        <Examples />
-        <ReactTable />
-        <ReactTable2 />
-        <ReactTable3 />
-        <ReactTable4 />
-        <ImageCarousel />
-      </main>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
