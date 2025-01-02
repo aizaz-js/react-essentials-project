@@ -442,12 +442,13 @@ td input {
   display: flex;
   gap: 10px;
   justify-content: end;
-  align-items: center;
+  align-items: start;
   width: 100%;
 }
 
 .create-post .form-container form .input-listing button {
   width: 50px;
+  margin-top: 30px;
   height: 30px;
 }
 
