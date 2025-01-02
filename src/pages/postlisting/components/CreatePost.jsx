@@ -2,59 +2,78 @@ import { MoveLeft } from 'lucide-react';
 import React, { useState } from 'react';
 
 export const CreatePost = ({ backButton, onPostAdded }) => {
-  const [newPost, setNewPost] = useState({
-    newTitle: '',
-    newBody: '',
-  });
+  const [newPost, setNewPost] = useState([
+    {
+      newTitle: '',
+      newBody: '',
+    },
+  ]);
+
   const [loading, setLoading] = useState({
     saveLoading: false,
     dataLoading: false,
   });
-  const [formError, setFormError] = useState({
-    titleError: '',
-    bodyError: '',
-  });
 
-  const handleInputClick = (value, name) => {
-    setNewPost(prev => ({ ...prev, [name]: value }));
+  const [formError, setFormError] = useState([
+    {
+      titleError: '',
+      bodyError: '',
+    },
+  ]);
+
+  const [showError, setShowError] = useState(false);
+
+  const handleInputClick = (value, name, index) => {
+    setNewPost(prev => {
+      const updatedPost = [...prev];
+      updatedPost[index] = { ...updatedPost[index], [name]: value };
+      return updatedPost;
+    });
+
+    if (showError) {
+      isValidForm();
+    }
   };
 
   const isValidForm = () => {
-    setFormError({
-      titleError: '',
-      bodyError: '',
+    let valid = true;
+    const errors = newPost.map(post => {
+      const error = { titleError: '', bodyError: '' };
+
+      if (!post.newTitle) {
+        error.titleError = 'Title is required';
+        valid = false;
+      } else if (post.newTitle.length < 5) {
+        error.titleError = 'Title must be at least 5 characters long';
+        valid = false;
+      } else if (post.newTitle.length > 100) {
+        error.titleError = 'Title must be at most 100 characters long';
+        valid = false;
+      }
+
+      if (!post.newBody) {
+        error.bodyError = 'Body is required';
+        valid = false;
+      } else if (post.newBody.length < 5) {
+        error.bodyError = 'Body must be at least 5 characters long';
+        valid = false;
+      } else if (post.newBody.length > 100) {
+        error.bodyError = 'Body must be at most 100 characters long';
+        valid = false;
+      }
+
+      return error;
     });
 
-    let valid = true;
-    if (!newPost.newTitle) {
-      setFormError(prev => ({ ...prev, titleError: 'Title is required' }));
-      valid = false;
-    } else if (newPost.newTitle.length < 5) {
-      setFormError(prev => ({ ...prev, titleError: 'Title must be at least 5 characters long' }));
-      valid = false;
-    } else if (newPost.newTitle.length > 100) {
-      setFormError(prev => ({ ...prev, titleError: 'Title must be at most 100 characters long' }));
-      valid = false;
-    }
-
-    if (!newPost.newBody) {
-      setFormError(prev => ({ ...prev, bodyError: 'Body is required' }));
-      valid = false;
-    } else if (newPost.newBody.length < 5) {
-      setFormError(prev => ({ ...prev, bodyError: 'Body must be at least 5 characters long' }));
-      valid = false;
-    } else if (newPost.newBody.length > 100) {
-      setFormError(prev => ({ ...prev, bodyError: 'Body must be at most 100 characters long' }));
-      valid = false;
-    }
-
+    setFormError(errors);
     return valid;
   };
 
-  const handleAddClick = event => {
+  const submitForm = event => {
     event.preventDefault();
-    setLoading(prev => ({ ...prev, saveLoading: true }));
 
+    setLoading(prev => ({ ...prev, saveLoading: true }));
+    setShowError(true);
     if (!isValidForm()) {
       setLoading(prev => ({ ...prev, saveLoading: false }));
       return;
@@ -75,16 +94,27 @@ export const CreatePost = ({ backButton, onPostAdded }) => {
       .then(response => response.json())
       .then(data => {
         onPostAdded(data);
-        setNewPost({ newTitle: '', newBody: '' });
+        setNewPost([{ newTitle: '', newBody: '' }]);
       });
   };
 
   const handleCancelClick = () => {
-    setNewPost({ newTitle: '', newBody: '' });
-    setFormError({
-      titleError: '',
-      bodyError: '',
-    });
+    setNewPost([{ newTitle: '', newBody: '' }]);
+    setFormError([
+      {
+        titleError: '',
+        bodyError: '',
+      },
+    ]);
+  };
+
+  const addRow = () => {
+    setNewPost(prev => [...prev, { newTitle: '', newBody: '' }]);
+    setFormError(prev => [...prev, { titleError: '', bodyError: '' }]);
+  };
+
+  const deleteRow = index => {
+    setNewPost(prev => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -102,7 +132,7 @@ export const CreatePost = ({ backButton, onPostAdded }) => {
             <h1>Create Post</h1>
           </header>
           <div className="form-container">
-            <form onSubmit={handleAddClick}>
+            <form onSubmit={submitForm}>
               <div className="button-listing">
                 <button type="submit" disabled={loading.saveLoading}>
                   {loading.saveLoading ? <span className="button-loader"></span> : 'Add '}
@@ -111,31 +141,39 @@ export const CreatePost = ({ backButton, onPostAdded }) => {
                   Cancel
                 </button>
               </div>
-              <div className="input-listing">
-                <div className="feild">
-                  <label htmlFor="title">Title</label>
-                  <textarea
-                    value={newPost.newTitle}
-                    onChange={e => handleInputClick(e.target.value, 'newTitle')}
-                    placeholder="Add Title..."
-                    id="title"
-                    type="text"
-                  />
-                  {formError.titleError && <p className="form-error">{formError.titleError}</p>}
+              {newPost.map((item, index) => (
+                <div key={index} className="input-listing">
+                  <div className="feild">
+                    <label>Title</label>
+                    <textarea
+                      value={item.newTitle}
+                      onChange={e => handleInputClick(e.target.value, 'newTitle', index)}
+                      placeholder="Add Title..."
+                      type="text"
+                    />
+                    {formError?.[index]?.titleError && <p className="form-error">{formError?.[index]?.titleError}</p>}
+                  </div>
+                  <div className="feild">
+                    <label>Body</label>
+                    <textarea
+                      value={item.newBody}
+                      onChange={e => handleInputClick(e.target.value, 'newBody', index)}
+                      placeholder="Add Body..."
+                      type="text"
+                    />
+                    {formError?.[index]?.bodyError && <p className="form-error">{formError?.[index]?.bodyError}</p>}
+                  </div>
+                  {index === 0 ? (
+                    <button onClick={addRow} type="button">
+                      +
+                    </button>
+                  ) : (
+                    <button onClick={() => deleteRow(index)} type="button">
+                      -
+                    </button>
+                  )}
                 </div>
-                <div className="feild">
-                  <label htmlFor="title">Body</label>
-                  <textarea
-                    value={newPost.newBody}
-                    onChange={e => handleInputClick(e.target.value, 'newBody')}
-                    placeholder="Add Body..."
-                    id="body"
-                    type="text"
-                  />
-                  {formError.bodyError && <p className="form-error">{formError.bodyError}</p>}
-                </div>
-                <button type="button">+ </button>
-              </div>
+              ))}
             </form>
           </div>
         </div>
