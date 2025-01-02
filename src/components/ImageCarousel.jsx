@@ -30,6 +30,7 @@ export function ImageCarousel() {
       {IMAGES.map((image, index) => (
         <img key={index} className={`${index === currentImage ? 'visible' : 'hidden'}`} src={image} alt="" />
       ))}
+
       {/* <img src={IMAGES[currentImage]} alt="" /> */}
       <button onClick={handlePrevClick}>Previous</button>
     </div>

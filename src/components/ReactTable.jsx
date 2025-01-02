@@ -25,7 +25,7 @@ const TABLE_DATA = [
   },
   {
     id: 5,
-    name: 'Carl',
+    name: 'CJ',
     description: 'I am a bubble developer',
   },
 ];
